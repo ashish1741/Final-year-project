@@ -1,16 +1,12 @@
 import React from 'react'
 import Header from '../components/Header'
+import SignUp from "../components/SignUp"
+import SigIn from '../components/SigIn'
 
 function Layout() {
-  const [activecomponent, setactivecomponent] = useState(false)
   return (
     <div>
-      <Header />
-      {
-
-       activecomponent && <copurse  />
-      }
-      <Course />
+       <SigIn />
     </div>
   )
 }
