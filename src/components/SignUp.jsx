@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { signUp } from "../assets";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Link,  useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 
 function SignUp({ title }) {
+  const navigate = useNavigate();
   const [createAccount, setCreateAccount] = useState({
     email: "",
     username: "",
@@ -38,8 +39,6 @@ function SignUp({ title }) {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-
     let hasErrors = false;
 
     if (!createAccount.email) {
@@ -96,18 +95,21 @@ function SignUp({ title }) {
     }
 
     if (!hasErrors) {
-      console.log(createAccount);
       createUserWithEmailAndPassword(
         auth,
         createAccount.email,
         createAccount.password
       )
-        .then((res) => {
+        .then(async (res) => {
+          navigate("/signin");
           console.log(res);
+          const user = res.user;
+          await updateProfile(user, {
+            displayName: createAccount.username,
+          });
         })
         .catch((err) => console.log(`Error is ${err}`));
-      // Proceed with the registration logic here if the form is valid
-      // Example: API calls, validation, etc.
+        event.target.querySelector('button[type="submit"]').setAttribute('disabled', 'true');
     }
   };
 
@@ -169,6 +171,9 @@ function SignUp({ title }) {
               onChange={handleChange}
               className="w-full bg-gray-700 text-gray-200 rounded-md p-2 outline-none"
             />
+            <span className="block text-gray-400 mb-1 font-light">
+              password must be more than 6 in length
+            </span>
             {formErrors.password && (
               <p className="text-red-500">{formErrors.password}</p>
             )}

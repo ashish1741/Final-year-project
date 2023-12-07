@@ -6,7 +6,7 @@ import SigIn from '../components/SigIn'
 function Layout() {
   return (
     <div>
-       <SigIn />
+       <h1>hello user</h1>
     </div>
   )
 }
