@@ -107,11 +107,20 @@ function SignUp({ title }) {
           await updateProfile(user, {
             displayName: createAccount.username,
           });
+
+          if (res) {
+            alert("user created")
+            
+          }
           navigate("/signin"); // Move this line here
           event.target.querySelector('button[type="submit"]').setAttribute('disabled', 'true');
         })
         .catch((err) => {
           console.log(`Error is ${err}`);
+          if (err) {
+            alert("err")
+            
+          }
           event.target.querySelector('button[type="submit"]').removeAttribute('disabled'); // Enable the button on error
         });
     }

@@ -24,18 +24,9 @@ function SignUp({ title }) {
         navigate("/");
       })
       .catch((err) => {
-        const {errorCode, errorMessage} = err
-        switch (errorCode) {
-          case "auth/invalid-email":
-          case "auth/user-not-found":
-            seterrorMsg({ ...errorMsg, email: "Email not found" });
-            break;
-          case "auth/wrong-password":
-            seterrorMsg({ ...errorMsg, password: "Incorrect password" });
-            break;
-          default:
-            console.error(`Error code: ${err}`);
-            break;
+        const { errorMessage} = err
+        if (errorMessage === undefined) {
+          alert("Invalid login") 
         }
       });
 

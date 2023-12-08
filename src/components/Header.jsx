@@ -4,9 +4,11 @@ import Avatar from "@mui/material/Avatar";
 import { deepPurple } from "@mui/material/colors";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header({ username }) {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const FirstLetter = username ? username.charAt(0).toUpperCase() : "";
 
@@ -14,29 +16,43 @@ function Header({ username }) {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleUser = (e) => {
+    e.preventDefault();
+    if (!username) {
+      navigate("/signin");
+    }
+  };
+
   return (
-    <header className="bg-slate-900">
+    <header className="bg-slate-900 border-b-2 border-gray-700 shadow-md sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center py-4">
         <div className="text-white text-2xl ml-3 font-bold">Pathshala</div>
         <div className="hidden lg:flex space-x-4 text-white">
           {navLinks.map((ele, index) => (
-            <Link to={ele.url}>
-              <span
-                className="hover:text-gray-500 text-xl p-2 m-4 cursor-pointer   "
-                key={index}
-              >
+            <Link to={ele.url} key={index}>
+              <span className="hover:text-gray-500 text-xl p-2 m-4 cursor-pointer">
                 {ele.name}
               </span>
             </Link>
           ))}
         </div>
         <div className="lg:hidden">
-          <MenuIcon
-            className="text-white cursor-pointer"
-            onClick={toggleMenu}
-          />
+          {isMenuOpen ? (
+            <CloseIcon
+              className="text-white cursor-pointer"
+              onClick={toggleMenu}
+            />
+          ) : (
+            <MenuIcon
+              className="text-white cursor-pointer"
+              onClick={toggleMenu}
+            />
+          )}
         </div>
-        <div className="flex items-center mr-3">
+        <div
+          className="flex items-center mr-3 cursor-pointer"
+          onClick={handleUser}
+        >
           {username ? (
             <Avatar sx={{ bgcolor: deepPurple[500] }}>{FirstLetter}</Avatar>
           ) : (
@@ -51,11 +67,8 @@ function Header({ username }) {
           <hr />
           <div className="container mx-auto text-white text-center">
             {navLinks.map((ele, index) => (
-              <Link to={ele.url}>
-                <div
-                  className="py-2 hover:text-gray-500 text-xl p-2 m-4 cursor-pointer"
-                  key={index}
-                >
+              <Link to={ele.url} key={index}>
+                <div className="py-2 hover:text-gray-500 text-xl p-2 m-4 cursor-pointer">
                   {ele.name}
                 </div>
               </Link>
