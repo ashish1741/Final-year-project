@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signUp } from "../assets";
 import Button from "@mui/material/Button";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link,  useNavigate,  } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -39,6 +39,7 @@ function SignUp({ title }) {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     let hasErrors = false;
 
     if (!createAccount.email) {
@@ -101,15 +102,18 @@ function SignUp({ title }) {
         createAccount.password
       )
         .then(async (res) => {
-          navigate("/signin");
           console.log(res);
           const user = res.user;
           await updateProfile(user, {
             displayName: createAccount.username,
           });
+          navigate("/signin"); // Move this line here
+          event.target.querySelector('button[type="submit"]').setAttribute('disabled', 'true');
         })
-        .catch((err) => console.log(`Error is ${err}`));
-        event.target.querySelector('button[type="submit"]').setAttribute('disabled', 'true');
+        .catch((err) => {
+          console.log(`Error is ${err}`);
+          event.target.querySelector('button[type="submit"]').removeAttribute('disabled'); // Enable the button on error
+        });
     }
   };
 
