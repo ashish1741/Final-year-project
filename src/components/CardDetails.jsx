@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useCourseContext } from '../context/context'
+
+
+
 
 function CardDetails() {
+
+  const {isLoading,course} = useCourseContext()
+
   return (
-    <div className='bg-teal-700'>CardDetails</div>
+  <div className="">
+     {
+    console.log(course)
+   }
+  </div>
   )
 }
 

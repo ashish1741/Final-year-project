@@ -85,7 +85,7 @@ function Course() {
 
          <div className="lg:col-span-3 overflow-y-auto">
             {/* Listing the courses */}
-              <Link to={`/${id}`}>
+              <Link to={`course/${id}`}>
             <div className="grid gap-4 p-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 cursor-pointer">
               <Card title="web developer" />
               <Card title="web developer" />

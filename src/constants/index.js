@@ -18,3 +18,18 @@ export const navLinks = [
 
 
 ]
+
+
+export const LearnerDashboardItems = [
+    {
+        id:1,
+        name:"Dashboard",
+        url:"/learner-dashboard"
+    },
+    {
+        id:2,
+        name:"Course",
+        url:"/"
+    },
+
+]

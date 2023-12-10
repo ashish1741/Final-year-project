@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { navLinks } from "../constants";
 import Avatar from "@mui/material/Avatar";
 import { deepPurple } from "@mui/material/colors";
@@ -6,8 +6,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate } from "react-router-dom";
+import { useCourseContext } from '../context/context'
 
-function Header({ username }) {
+
+function Header() {
+  const { user } = useCourseContext();
+  console.log(user);
+  const { id, role, username } = user || {};
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const FirstLetter = username ? username.charAt(0).toUpperCase() : "";
@@ -20,9 +25,19 @@ function Header({ username }) {
     e.preventDefault();
     if (!username) {
       navigate("/signin");
+      return;
+    }
+
+    if (role === "creator") {
+      navigate("/creator-dashboard");
+      return;
+    }
+
+    if (role === "learner") {
+      navigate("/learner-dashboard");
+      return;
     }
   };
-
   return (
     <header className="bg-slate-900 border-b-2 border-gray-700 shadow-md sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center py-4">

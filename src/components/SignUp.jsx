@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { signUp } from "../assets";
 import Button from "@mui/material/Button";
-import { Link,  useNavigate,  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { db, auth } from "../firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 function SignUp({ title }) {
+  const userRef = collection(db, "users");
+  const user = auth.currentUser;
+
   const navigate = useNavigate();
   const [createAccount, setCreateAccount] = useState({
     email: "",
@@ -41,6 +45,7 @@ function SignUp({ title }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     let hasErrors = false;
+    console.log(createAccount.role);
 
     if (!createAccount.email) {
       setFormErrors({ ...formErrors, email: "Email is required." });
@@ -101,28 +106,43 @@ function SignUp({ title }) {
         createAccount.email,
         createAccount.password
       )
-        .then(async (res) => {
-          console.log(res);
+        .then((res) => {
           const user = res.user;
-          await updateProfile(user, {
+          updateProfile(user, {
             displayName: createAccount.username,
+          }).then(() => {
+            const userDocRef = doc(userRef, user.uid);
+            setDoc(userDocRef, {
+              username: createAccount.username,
+              email: createAccount.email,
+              role: createAccount.role,
+              id: user.uid,
+            })
+              .then(() => {
+                alert("User created");
+                navigate("/signin");
+                event.target
+                  .querySelector('button[type="submit"]')
+                  .setAttribute("disabled", "true");
+              })
+              .catch((err) => {
+                console.error(`Error occurred while setting user data: ${err}`);
+                alert("Error occurred while creating the user");
+                event.target
+                  .querySelector('button[type="submit"]')
+                  .removeAttribute("disabled");
+              });
           });
-
-          if (res) {
-            alert("user created")
-            
-          }
-          navigate("/signin"); // Move this line here
-          event.target.querySelector('button[type="submit"]').setAttribute('disabled', 'true');
         })
         .catch((err) => {
-          console.log(`Error is ${err}`);
-          if (err) {
-            alert("err")
-            
-          }
-          event.target.querySelector('button[type="submit"]').removeAttribute('disabled'); // Enable the button on error
+          console.error(`Error occurred while creating the user: ${err}`);
+          alert("Error occurred while creating the user");
+          event.target
+            .querySelector('button[type="submit"]')
+            .removeAttribute("disabled");
         });
+
+      // geting user data
     }
   };
 
@@ -242,7 +262,7 @@ function SignUp({ title }) {
           </div>
           <div className="my-4">
             <Button variant="contained" type="submit">
-              Submit
+              create Account
             </Button>
           </div>
         </form>
