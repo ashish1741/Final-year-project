@@ -10,7 +10,7 @@ const CourseReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
-        course: action.payload,
+        courses: action.payload,
       };
 
       

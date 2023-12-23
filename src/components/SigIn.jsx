@@ -34,6 +34,13 @@ function Signin({ title }) {
       );
 
       navigate("/");
+      Swal.fire({
+        icon: 'success',
+        title: 'Logged in successfully!',
+        showConfirmButton: false,
+        timer: 1500 // Adjust the timer as needed
+      });
+
 
 
 
@@ -46,8 +53,12 @@ function Signin({ title }) {
       if (code === "auth/user-not-found" || code === "auth/wrong-password") {
         seterrorMsg({ email: "", password: "Invalid email or password." });
       } else {
-        // Other errors, display general message
-        alert("Invalid login");
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid login',
+          showConfirmButton: false,
+          timer: 1500 // Adjust the timer as needed
+        });
       }
 
       if (button) {

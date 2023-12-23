@@ -7,24 +7,38 @@ import Tools from "./pages/Tools";
 import CardDetails from "./components/CardDetails";
 import Course from "./pages/Course";
 import CreatorPannel from "./components/CreatorPannel";
-import LearnerPannel from "./components/LearnerPannel"
+import LearnerPannel from "./components/LearnerPannel";
+import DashBorad from "./dashboard/DashBorad";
+import Analytics from "./dashboard/Analytics";
+import Home from "./pages/Home";
+import Error404 from "./components/Error404";
+import Signin from "./components/SigIn";
+import CourseManagement from "./dashboard/courseManagement"
+import CreateVideo from "./dashboard/createVideo";
 
 function App() {
-  
-
   return (
     <div className="w-full h-full bg-slate-950">
       <BrowserRouter>
-        <Header  />
         <Routes>
-          <Route path="/" element={<Course />} />
-          <Route path="course/:id" element={<CardDetails />} />
+          <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SigIn />} />
           <Route path="/tools" element={<Tools />} />
-          <Route path="/creator-dashboard" element={<CreatorPannel />} />
-          <Route path="/learner-dashboard" element={<LearnerPannel />} />
-          {/* Other routes can be added similarly */}
+          <Route path="/signin" element={<Signin />} />
+          <Route path="*" element={<Error404 />} />
+
+          {/* Nested route for courses */}
+          <Route path="/course" element={<Course />}>
+          <Route path=":id" element={<CardDetails />} />
+          </Route>
+
+          {/* Nested routes for creator dashboard */}
+          <Route path="/creator-dashboard" element={<CreatorPannel />}>
+            <Route index element={<DashBorad />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="courseManagement" element={<CourseManagement />} />
+            <Route path="create-course" element={<CreateVideo />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

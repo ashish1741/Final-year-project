@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
+import Swal from 'sweetalert2';
 
 function SignUp({ title }) {
   const userRef = collection(db, "users");
@@ -119,7 +120,12 @@ function SignUp({ title }) {
               id: user.uid,
             })
               .then(() => {
-                alert("User created");
+                Swal.fire({
+                  icon: 'success',
+                  title: 'User created',
+                  showConfirmButton: false,
+                  timer: 1000 // Adjust the timer as needed
+                });
                 navigate("/signin");
                 event.target
                   .querySelector('button[type="submit"]')
@@ -127,7 +133,12 @@ function SignUp({ title }) {
               })
               .catch((err) => {
                 console.error(`Error occurred while setting user data: ${err}`);
-                alert("Error occurred while creating the user");
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error occurred while creating the user',
+                  showConfirmButton: false,
+                  timer: 1500 // Adjust the timer as needed
+                });
                 event.target
                   .querySelector('button[type="submit"]')
                   .removeAttribute("disabled");
@@ -136,7 +147,12 @@ function SignUp({ title }) {
         })
         .catch((err) => {
           console.error(`Error occurred while creating the user: ${err}`);
-          alert("Error occurred while creating the user");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error occurred while creating the user',
+            showConfirmButton: false,
+            timer: 1500 // Adjust the timer as needed
+          });
           event.target
             .querySelector('button[type="submit"]')
             .removeAttribute("disabled");

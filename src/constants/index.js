@@ -1,3 +1,6 @@
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+
 export const navLinks = [
     {
         name:"Home",
@@ -5,11 +8,11 @@ export const navLinks = [
     },
     {
         name:"Course",
-        url : "/"
+        url : "/course"
     },
     {
-        name:"Formus",
-        url : "/formus"
+        name:"Forums",
+        url : "/Forums"
     },
     {
         name:"Tools",
@@ -19,17 +22,47 @@ export const navLinks = [
 
 ]
 
-
 export const LearnerDashboardItems = [
     {
-        id:1,
-        name:"Dashboard",
-        url:"/learner-dashboard"
+        id: 1,
+        name: "Dashboard",
+        url: "/learner-dashboard",
+        icon: 'DashboardIcon' // String representation of the icon name
     },
     {
-        id:2,
-        name:"Course",
-        url:"/"
+        id: 2,
+        name: "Course",
+        url: "/",
+        icon: 'VideoLibraryIcon' // String representation of the icon name
+    },
+];
+
+export const creatorDashboardItems= [
+    {
+        name:"Dashboard",
+        url:"",
+
+    },
+   
+    {
+        name:"Analytics",
+        url:"analytics",
+        
+    },
+    {
+        name:"Create Course",
+        url:"create-course",
+        
+    },
+    {
+        name:" Course Management",
+        url:"courseManagement",
+
+    },
+    {
+        name:"Settings and Profile",
+        icon:"",
+
     },
 
 ]
