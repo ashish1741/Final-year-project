@@ -15,6 +15,7 @@ import Error404 from "./components/Error404";
 import Signin from "./components/SigIn";
 import CourseManagement from "./dashboard/courseManagement"
 import CreateVideo from "./dashboard/createVideo";
+import SettingsProfile from "./dashboard/Settings-Profile";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="analytics" element={<Analytics />} />
             <Route path="courseManagement" element={<CourseManagement />} />
             <Route path="create-course" element={<CreateVideo />} />
+            <Route path="Settings-Profile" element={<SettingsProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

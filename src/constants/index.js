@@ -35,6 +35,9 @@ export const LearnerDashboardItems = [
         url: "/",
         icon: 'VideoLibraryIcon' // String representation of the icon name
     },
+    {
+        id:3
+    }
 ];
 
 export const creatorDashboardItems= [
@@ -61,7 +64,7 @@ export const creatorDashboardItems= [
     },
     {
         name:"Settings and Profile",
-        icon:"",
+        url:"Settings-Profile",
 
     },
 

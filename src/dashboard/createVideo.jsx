@@ -196,6 +196,7 @@ function CreateVideo() {
 
   return (
     <div className="p-2 m-2">
+      <h1 className="text-gray-300 font-extrabold capitalize">create new video</h1>
       <div className="p-2 m-2 grid grid-cols-3 gap-4">
         <div className="col-span-1 flex flex-col space-y-3">
           <div className="p-3 mt-2">
